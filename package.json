@@ -2,6 +2,9 @@
   "name": "password-encrypt-cli",
   "version": "1.0.17",
   "description": "Encrypt and Decrypt Plain Text Password with AES ",
+  "engines": {
+    "node": "8.2.1"
+  },
   "bin": {
     "pass": "bin/pass.js"
   },
