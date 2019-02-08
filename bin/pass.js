@@ -8,7 +8,7 @@ const prompt  = require('prompt');
 
  
 program
-  .version('0.1.17', '-v, --version')
+  .version('1.1.0', '-v, --version')
   .usage('encrypt|decrypt <password> <options>');
   
 
@@ -30,8 +30,6 @@ program
       console.log(' Encrypted Password: ' + ciphertext);
       console.log();
     }
-    // console.log( password );
-    // console.log( options.key );
  
   });
 
@@ -41,11 +39,12 @@ program
   .option('-k, --key <string>', 'String Key to Use')
   .action(function (password, options) {
     debug('decrypt command');
-    console.log( password );
-    console.log( options.key );
+    //console.log( password );
+    //console.log( options.key );
     if( options.key == undefined ){
       console.log();
-      console.log('  -k, --key option is required');
+      console.log('  Decryption Operation Failed: ');
+      console.log(colors.red('  -k, --key option is required'));
       console.log('  ');
       process.exit(1);
     } else {
@@ -53,9 +52,12 @@ program
       let plaintext = bytes.toString(CryptoJS.enc.Utf8);
       console.log();
       if (!plaintext.length) {
-        console.log(colors.red('Invalid Secret Key: '));
+        console.log();
+        console.log('  Decryption Operation Failed: ');
+        console.log(colors.red('  Invalid Secret Key. Please try again. '));
+        console.log('  ');
       } else {
-        console.log(' Plain Text Decrypted Password: ' + plaintext);
+        console.log(' Decrypted Password: ' + plaintext);
       }
       
       console.log();
@@ -68,10 +70,15 @@ program.on('--help', function(){
   console.log('Examples:');
   console.log('');
   console.log('  $ pass encrypt mypassword -k oneWordPass');
-  console.log("  $ pass encrypt mypassword -k 'Phrase to encrypt words' ");
+  console.log("  $ pass encrypt 'mypassword' -k 'Phrase to encrypt words' ");
   console.log('');
   console.log('  $ pass decrypt encryptedstring -k oneWordPass');
-  console.log("  $ pass decrypt encryptedstring -k 'Phrase to encrypt words' ");
+  console.log("  $ pass decrypt 'encryptedstring' -k 'Phrase to encrypt words' ");
+  console.log('');
+  console.log('Notice: ')
+  console.log('  For special characters in passwords/keys,');
+  console.log('  please use single quotes around each');
+  console.log('');
   console.log('');
 });
 
